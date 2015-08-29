@@ -4,7 +4,7 @@
 #[ -z "`grep -o kongac /tmp/loginprompt`" ] && echo "This is not a Kong K3-AC-ARM build; this is not the right repository for you." && exit
 
 echo "Checking we can reach the repository..."
-[ -z "`curl -sfI http://downloads.openwrt.org/snapshots/trunk/brcm47xx/generic/packages/base/Packages.gz`" ] && echo "Could not download Packages.gz, connectivity problem?" && exit
+[ -z "`curl -sfI http://downloads.openwrt.org/snapshots/trunk/brcm47xx/mips74k/packages/base/Packages.gz`" ] && echo "Could not download Packages.gz, connectivity problem?" && exit
 
 cd /opt
 mkdir -p /opt/etc >/dev/null 2>&1
@@ -29,7 +29,7 @@ alias opkg="opkg -f /opt/etc/opkg.conf --force-depends"
 IPKG_INSTROOT=/opt
 echo "Making sure we have an initial opkg"
 [ -x /opt/bin/opkg ] || cd /opt \
-		`/usr/bin/wget https://downloads.openwrt.org/snapshots/trunk/brcm47xx/generic/packages/base/opkg_9c97d5ecd795709c8584e972bfdf3aee3a5b846d-8_brcm47xx.ipk -O opkg.ipk` \
+		`/usr/bin/wget https://downloads.openwrt.org/snapshots/trunk/brcm47xx/mips74k/packages/base/opkg_9c97d5ecd795709c8584e972bfdf3aee3a5b846d-8_brcm47xx.ipk -O opkg.ipk` \
 		`/bin/mkdir -p /opt/lib` \
 		`/usr/bin/wget https://dev.openwrt.org/browser/trunk/package/base-files/files/lib/functions.sh?format=txt -O /opt/lib/functions.sh` \
 		EXTB=`tar zxvf opkg.ipk` \
@@ -41,12 +41,12 @@ echo "Making sure we have an initial opkg"
 
 echo "Creating the opkg config file in /opt/etc/opkg"
 cat > /opt/etc/opkg.conf <<EOF
-src/gz chaos_calmer_base http://downloads.openwrt.org/snapshots/trunk/brcm47xx/generic/packages/base
-#src/gz chaos_calmer_luci http://downloads.openwrt.org/snapshots/trunk/brcm47xx/generic/packages/luci
-#src/gz chaos_calmer_management http://downloads.openwrt.org/snapshots/trunk/brcm47xx/generic/packages/management
-src/gz chaos_calmer_packages http://downloads.openwrt.org/snapshots/trunk/brcm47xx/generic/packages/packages
-src/gz chaos_calmer_routing http://downloads.openwrt.org/snapshots/trunk/brcm47xx/generic/packages/routing
-src/gz chaos_calmer_telephony http://downloads.openwrt.org/snapshots/trunk/brcm47xx/generic/packages/telephony
+src/gz chaos_calmer_base http://downloads.openwrt.org/snapshots/trunk/brcm47xx/mips74k/packages/base
+#src/gz chaos_calmer_luci http://downloads.openwrt.org/snapshots/trunk/brcm47xx/mips74k/packages/luci
+#src/gz chaos_calmer_management http://downloads.openwrt.org/snapshots/trunk/brcm47xx/mips74k/packages/management
+src/gz chaos_calmer_packages http://downloads.openwrt.org/snapshots/trunk/brcm47xx/mips74k/packages/packages
+src/gz chaos_calmer_routing http://downloads.openwrt.org/snapshots/trunk/brcm47xx/mips74k/packages/routing
+src/gz chaos_calmer_telephony http://downloads.openwrt.org/snapshots/trunk/brcm47xx/mips74k/packages/telephony
 dest root /opt
 dest ram /tmp
 lists_dir ext var/opkg-lists
@@ -83,4 +83,4 @@ echo "Minimal setup is complete. You should now have a working opkg."
 echo "We have created some aliases in your ~/.profile to make everything work."
 echo "Please either 'source .profile' or LOG OUT and LOG IN AGAIN before proceeding."
 #echo "Installing libc package to silence dependencies"
-#opkg --force-overwrite install https://downloads.openwrt.org/snapshots/trunk/brcm47xx/generic/packages/base/libc_1.1.10-1_brcm47xx.ipk
+#opg --force-overwrite install https://downloads.openwrt.org/snapshots/trunk/brcm47xx/mips74k/packages/base/libc_1.1.10-1_brcm47xx.ipk
